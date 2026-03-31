@@ -71,18 +71,22 @@ Add a `ticketPrefix` to display a system-specific prefix in the ticket reference
       github-token: ${{ secrets.GITHUB_TOKEN }}
       linkStyle: plaintext
   ```
+
   ```json
   { "ticketPrefix": "AB#" }
   ```
+
   Branch: `feature/AB-1234-my-feature` → Shows: `[ 🎫 AB#1234 ]` (auto-linked by Azure DevOps)
 
 - **Azure DevOps with explicit link**:
+
   ```json
   {
     "ticketBaseUrl": "https://dev.azure.com/myorg/myproject/_workitems/edit/",
     "ticketPrefix": "AB#"
   }
   ```
+
   Branch: `feature/AB-1234-my-feature` → Shows: `[ 🎫 [AB#1234](...) ]`
 
 - **JIRA, Linear, or others** (default, no prefix):
@@ -107,31 +111,37 @@ Your branch names must contain a ticket ID:
 Appends a footer to the PR description. The exact format depends on `linkStyle`:
 
 **`markdown` (default)**
+
 ```markdown
 ---
+
 <!-- TODO NUKEM PR Ticket Link -->
+
 [ 🎫 [PROJ-123](https://jira.example.com/browse/PROJ-123) ]
 
-*via [TODO NUKEM](https://github.com/jolution/todo-nukem)*
+_via [TODO NUKEM](https://github.com/jolution/todo-nukem)_
 ```
 
 **`plaintext`** (e.g. for Azure DevOps auto-linking)
+
 ```markdown
 ---
+
 <!-- TODO NUKEM PR Ticket Link -->
+
 [ 🎫 AB#123 ]
 
-*via [TODO NUKEM](https://github.com/jolution/todo-nukem)*
+_via [TODO NUKEM](https://github.com/jolution/todo-nukem)_
 ```
 
 The HTML comment acts as a marker to prevent duplicate entries on subsequent runs.
 
 ## Inputs
 
-| Name            | Description                              | Required | Default               |
-| --------------- | ---------------------------------------- | -------- | --------------------- |
-| `github-token`  | GitHub token for API access              | Yes      | `${{ github.token }}` |
-| `hidePromotion` | Hide the 'via TODO NUKEM' promotion link | No       | `false`               |
+| Name            | Description                                                                                                                     | Required | Default               |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------- | -------- | --------------------- |
+| `github-token`  | GitHub token for API access                                                                                                     | Yes      | `${{ github.token }}` |
+| `hidePromotion` | Hide the 'via TODO NUKEM' promotion link                                                                                        | No       | `false`               |
 | `linkStyle`     | Format of the ticket reference: `markdown` (Markdown hyperlink) or `plaintext` (plain text, e.g. for Azure DevOps auto-linking) | No       | `markdown`            |
 
 ## Related
