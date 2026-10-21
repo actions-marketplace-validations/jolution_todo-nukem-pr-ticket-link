@@ -60,42 +60,49 @@ Add a `ticketPrefix` to display a system-specific prefix in the ticket reference
 }
 ```
 
-**Examples:**
+### Example Configs
 
-- **Azure DevOps with auto-linking** ([Learn more](https://learn.microsoft.com/en-us/azure/devops/boards/github/link-to-from-github?view=azure-devops)):
+**Jira** (`.todonukem.json`):
 
-  ```yaml
-  - name: Add ticket link to PR
-    uses: jolution/todo-nukem-pr-ticket-link@v1
-    with:
-      github-token: ${{ secrets.GITHUB_TOKEN }}
-      linkStyle: plaintext
-  ```
+```json
+{
+  "ticketBaseUrl": "https://url-to-jira/browse/",
+  "ticketPrefix": "PROJ-"
+}
+```
 
-  ```json
-  { "ticketPrefix": "AB#" }
-  ```
+**Azure DevOps** (`.todonukem.json`):
 
-  Branch: `feature/AB-1234-my-feature` → Shows: `[ 🎫 AB#1234 ]` (auto-linked by Azure DevOps)
+```json
+{
+  "ticketBaseUrl": "https://dev.azure.com/myorg/myproject/_workitems/edit/",
+  "ticketPrefix": "AB#"
+}
+```
 
-- **Azure DevOps with explicit link**:
+### GitHub Autolink References (alternative)
 
-  ```json
-  {
-    "ticketBaseUrl": "https://dev.azure.com/myorg/myproject/_workitems/edit/",
-    "ticketPrefix": "AB#"
-  }
-  ```
+Instead of `linkStyle: markdown`, use `linkStyle: plaintext` and let GitHub link the reference. Configure under _Settings → Code and automation → Autolink references → Add autolink reference_.
 
-  Branch: `feature/AB-1234-my-feature` → Shows: `[ 🎫 [AB#1234](...) ]`
+```yaml
+- name: Add ticket link to PR
+  uses: jolution/todo-nukem-pr-ticket-link@v1
+  with:
+    github-token: ${{ secrets.GITHUB_TOKEN }}
+    linkStyle: plaintext
+```
 
-- **JIRA, Linear, or others** (default, no prefix):
-  ```json
-  {
-    "ticketBaseUrl": "https://jira.example.com/browse/"
-  }
-  ```
-  Branch: `feature/PROJ-1234-my-feature` → Shows: `[ 🎫 [1234](...) ]`
+**Jira:**
+
+- Reference prefix: `PROJ-`
+- Target URL: `https://url-to-jira/browse/PROJ-<num>`
+- Format: Numeric
+
+**Azure DevOps:**
+
+- Reference prefix: `AB#`
+- Target URL: `https://dev.azure.com/myorg/myproject/_workitems/edit/<num>`
+- Format: Numeric
 
 ## Branch Naming
 
