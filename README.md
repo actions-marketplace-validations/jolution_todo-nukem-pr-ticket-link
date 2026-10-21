@@ -31,7 +31,16 @@ jobs:
 
 ## Configuration
 
-Add `ticketBaseUrl` to your `package.json`:
+Create a `.todonukem.json` file:
+
+```json
+{
+  "ticketBaseUrl": "https://your-company.atlassian.net/browse/"
+}
+```
+
+<details>
+<summary>Or add <code>ticketBaseUrl</code> to your <code>package.json</code></summary>
 
 ```json
 {
@@ -41,24 +50,11 @@ Add `ticketBaseUrl` to your `package.json`:
 }
 ```
 
-Or create a `.todonukem.json` file (overrides `package.json`):
+</details>
 
-```json
-{
-  "ticketBaseUrl": "https://your-company.atlassian.net/browse/"
-}
-```
-
-### Optional: Ticket Prefix
+## Optional: Ticket Prefix
 
 Add a `ticketPrefix` to display a system-specific prefix in the ticket reference (prefix is only used for display, not in the URL):
-
-```json
-{
-  "ticketBaseUrl": "https://dev.azure.com/myorg/myproject/_workitems/edit/",
-  "ticketPrefix": "AB#"
-}
-```
 
 ### Example Configs
 
@@ -82,7 +78,7 @@ Add a `ticketPrefix` to display a system-specific prefix in the ticket reference
 
 ### GitHub Autolink References (alternative)
 
-Instead of `linkStyle: markdown`, use `linkStyle: plaintext` and let GitHub link the reference. Configure under _Settings → Code and automation → Autolink references → Add autolink reference_.
+Instead of `linkStyle: markdown`, use `linkStyle: plaintext` and let GitHub link the reference. `linkStyle` is optional and defaults to `markdown`, so `plaintext` must be set explicitly for autolinks. Configure under _Settings → Autolink references → Add autolink reference_.
 
 ```yaml
 - name: Add ticket link to PR
