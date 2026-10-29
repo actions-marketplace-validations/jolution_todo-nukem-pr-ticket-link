@@ -31,7 +31,16 @@ jobs:
 
 ## Configuration
 
-Add `ticketBaseUrl` to your `package.json`:
+Create a `.todonukem.json` file:
+
+```json
+{
+  "ticketBaseUrl": "https://your-company.atlassian.net/browse/"
+}
+```
+
+<details>
+<summary>Or add <code>ticketBaseUrl</code> to your <code>package.json</code></summary>
 
 ```json
 {
@@ -41,17 +50,24 @@ Add `ticketBaseUrl` to your `package.json`:
 }
 ```
 
-Or create a `.todonukem.json` file (overrides `package.json`):
+</details>
+
+## Optional: Ticket Prefix
+
+Add a `ticketPrefix` to display a system-specific prefix in the ticket reference (prefix is only used for display, not in the URL):
+
+### Example Configs
+
+**Jira** (`.todonukem.json`):
 
 ```json
 {
-  "ticketBaseUrl": "https://your-company.atlassian.net/browse/"
+  "ticketBaseUrl": "https://url-to-jira/browse/",
+  "ticketPrefix": "PROJ-"
 }
 ```
 
-### Optional: Ticket Prefix
-
-Add a `ticketPrefix` to display a system-specific prefix in the ticket reference (prefix is only used for display, not in the URL):
+**Azure DevOps** (`.todonukem.json`):
 
 ```json
 {
@@ -60,42 +76,29 @@ Add a `ticketPrefix` to display a system-specific prefix in the ticket reference
 }
 ```
 
-**Examples:**
+### GitHub Autolink References (alternative)
 
-- **Azure DevOps with auto-linking** ([Learn more](https://learn.microsoft.com/en-us/azure/devops/boards/github/link-to-from-github?view=azure-devops)):
+Instead of `linkStyle: markdown`, use `linkStyle: plaintext` and let GitHub link the reference. `linkStyle` is optional and defaults to `markdown`, so `plaintext` must be set explicitly for autolinks. Configure under _Settings → Autolink references → Add autolink reference_.
 
-  ```yaml
-  - name: Add ticket link to PR
-    uses: jolution/todo-nukem-pr-ticket-link@v1
-    with:
-      github-token: ${{ secrets.GITHUB_TOKEN }}
-      linkStyle: plaintext
-  ```
+```yaml
+- name: Add ticket link to PR
+  uses: jolution/todo-nukem-pr-ticket-link@v1
+  with:
+    github-token: ${{ secrets.GITHUB_TOKEN }}
+    linkStyle: plaintext
+```
 
-  ```json
-  { "ticketPrefix": "AB#" }
-  ```
+**Jira:**
 
-  Branch: `feature/AB-1234-my-feature` → Shows: `[ 🎫 AB#1234 ]` (auto-linked by Azure DevOps)
+- Reference prefix: `PROJ-`
+- Target URL: `https://url-to-jira/browse/PROJ-<num>`
+- Format: Numeric
 
-- **Azure DevOps with explicit link**:
+**Azure DevOps:**
 
-  ```json
-  {
-    "ticketBaseUrl": "https://dev.azure.com/myorg/myproject/_workitems/edit/",
-    "ticketPrefix": "AB#"
-  }
-  ```
-
-  Branch: `feature/AB-1234-my-feature` → Shows: `[ 🎫 [AB#1234](...) ]`
-
-- **JIRA, Linear, or others** (default, no prefix):
-  ```json
-  {
-    "ticketBaseUrl": "https://jira.example.com/browse/"
-  }
-  ```
-  Branch: `feature/PROJ-1234-my-feature` → Shows: `[ 🎫 [1234](...) ]`
+- Reference prefix: `AB#`
+- Target URL: `https://dev.azure.com/myorg/myproject/_workitems/edit/<num>`
+- Format: Numeric
 
 ## Branch Naming
 
